@@ -119,13 +119,13 @@ namespace OOAtask84 {
 				x = x0 + (R + 15) * Math::Cos(a * TORAD);
 				y = x0 - (R + 15) * Math::Sin(a * TORAD);
 				g->DrawString(h.ToString(),
-					this->Font, Brushes::Black, x - 5, y - 7);
+					this->Font, Brushes::DarkRed, x - 5, y - 7);
 				h--;
 				if (h == 0) h = 12;
 
 			}
 			else
-				g->DrawEllipse(Pens::Black, x - 1, y - 1, 1, 1);
+				g->DrawEllipse(Pens::Firebrick, x - 1, y - 1, 1, 1);
 			a = a + 6; // 1 минута - 6 градусов
 		}
 		// стрелки
@@ -152,9 +152,9 @@ namespace OOAtask84 {
 		   void DrawClock(void)
 		   {
 			   // карандаши для рисования стрелок
-			   Pen^ hPen = gcnew Pen(Color::LightBlue, 3);
-			   Pen^ mPen = gcnew Pen(Color::LightBlue, 3);
-			   Pen^ sPen = gcnew Pen(Color::Black, 2);
+			   Pen^ hPen = gcnew Pen(Color::LightCoral, 3);
+			   Pen^ mPen = gcnew Pen(Color::Red, 3);
+			   Pen^ sPen = gcnew Pen(Color::DarkRed, 2);
 			   // карандаш для стирания стрелок
 			   Pen^ cPen = gcnew Pen(SystemColors::Control, 4);
 			   // шаг секундной и минутной стрелок б градусов,
