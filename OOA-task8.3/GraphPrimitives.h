@@ -80,8 +80,8 @@ namespace OOAtask83 {
 	private: System::Void pictureBox1_Paint(System::Object^ sender, System::Windows::Forms::PaintEventArgs^ e) {
 		// графическая поверхность
 		System::Drawing::Graphics^ g = e->Graphics;
-		int x0 = (this->ClientSize.Width) / 2; // ширина внутренней области формы 
-		int y0 = (this->ClientSize.Height) / 6;
+		double x0 = (this->ClientSize.Width) / 2; // ширина внутренней области формы 
+		double y0 = (this->ClientSize.Height) / 6;
 
 		//рисуем правильный пятиугольник (8.3.а)
 		int r = 50, a = 0; //длина стороны и начальный угол 
@@ -102,7 +102,7 @@ namespace OOAtask83 {
 		// рисование ломаной линии 
 		g->DrawLines(Pens::DodgerBlue, p);
 
-		int x = x0, y = y0 + r * 3 / 2;
+		double x = x0, y = y0 + r * 3 / 2;
 		r = 7;
 		//рисуем точку (8.3.б)
 		g->FillEllipse(Brushes::ForestGreen, x-r/2, y, r, r);
