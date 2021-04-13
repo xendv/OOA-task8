@@ -43,7 +43,7 @@ namespace OOAtask82 {
 		/// <summary>
 		/// Обязательная переменная конструктора.
 		/// </summary>
-		System::ComponentModel::Container ^components;
+		System::ComponentModel::Container^ components;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -61,7 +61,7 @@ namespace OOAtask82 {
 			this->pictureBox1->Dock = System::Windows::Forms::DockStyle::Fill;
 			this->pictureBox1->Location = System::Drawing::Point(0, 0);
 			this->pictureBox1->Name = L"pictureBox1";
-			this->pictureBox1->Size = System::Drawing::Size(562, 374);
+			this->pictureBox1->Size = System::Drawing::Size(644, 528);
 			this->pictureBox1->TabIndex = 0;
 			this->pictureBox1->TabStop = false;
 			this->pictureBox1->ClientSizeChanged += gcnew System::EventHandler(this, &BrushSamplesForm::pictureBox1_ClientSizeChanged);
@@ -71,7 +71,7 @@ namespace OOAtask82 {
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(562, 374);
+			this->ClientSize = System::Drawing::Size(644, 528);
 			this->Controls->Add(this->pictureBox1);
 			this->Name = L"BrushSamplesForm";
 			this->Text = L"BrushSamplesForm";
@@ -85,15 +85,15 @@ namespace OOAtask82 {
 		System::Drawing::Graphics^ g = e->Graphics;
 		int w = 100, h = 200; //ширина и высота буквы
 		int x0 = (this->ClientSize.Width - w) / 4; // ширина внутренней области формы 
-		int y0 = (this->ClientSize.Height - h) / 4;
+		int y0 = (this->ClientSize.Height - h) / 10;
 
 		//создаём карандаш толщиной 4 пиксела 
-		System::Drawing::Pen^ aPen; 
-		aPen = gcnew Pen(Color::DarkViolet,4);
+		System::Drawing::Pen^ aPen;
+		aPen = gcnew Pen(Color::DarkViolet, 4);
 		aPen->DashStyle = System::Drawing::Drawing2D::DashStyle::DashDot; //пунктир
-		g->DrawLine(aPen, x0, y0, x0, y0+h);
-		g->DrawLine(aPen, x0, y0+h/2, x0+w, y0);
-		g->DrawLine(aPen, x0, y0 + h / 2, x0 + w, y0+h);
+		g->DrawLine(aPen, x0, y0, x0, y0 + h);
+		g->DrawLine(aPen, x0, y0 + h / 2, x0 + w, y0);
+		g->DrawLine(aPen, x0, y0 + h / 2, x0 + w, y0 + h);
 		int x, y;
 		x = x0 + w + 10;
 		y = y0 + h;
@@ -110,27 +110,37 @@ namespace OOAtask82 {
 			Color::DarkTurquoise); //цвет фона
 		System::Drawing::Font^ aFont = gcnew System::Drawing::Font("Arial", 190);
 		g->DrawString("Д.", aFont, myBrush, x, y);
-		//g->FillRectangle(myBrush, 10, 10, 250, 250);
 
-		//System::Drawing::Brush^ aBrush;
-		//aBrush = gcnew System::Drawing::TextureBrush ();
-		//рисуем этим карандашом 
-		//g->DrawRectangle(aPen,x0,y0,100,100);
-		//System::Drawing::Font^ aFont;
-			//aFont = gcnew Font("Arial", 16);
-		//g->DrawString("K.", aFont,Brushes::AliceBlue,x0+10,y0+10);
+		//текстура
+		x = x0;
+		y = y0 + h * 4 / 3;
 
-		//изменяем толщину и цвет карандаша 
-		/*aPen->Width = 4; 
-		aPen->Color = Color::Green;
-		//рисуем
-		g->DrawRectangle(aPen, 20, 20, 100, 100);
-		//снова меняем толщину, цвет, а также стиль 
-		aPen->Width =1; 
-		aPen->Color = Color::Purple;
-		aPen->DashStyle = System::Drawing::Drawing2D::DashStyle::Dash; //пунктир 
-		//рисуем пунктиром
-		g->DrawRectangle(aPen, 30, 30, 100, 100);*/
+		System::Drawing::TextureBrush^ myBrush2;
+		try {
+			myBrush2 = gcnew System::Drawing::TextureBrush
+			(Image::FromFile(Application::StartupPath + "\\11.png"));
+			//рисуем текстурной кистью
+			g->FillRectangle(myBrush2, x * 4/3, y, 200, 200);
+		}
+		catch (System::IO::FileNotFoundException^ ex) {
+			g->DrawRectangle(Pens::Black, x, y, w, h);
+			g->DrawString("Рисунок", this->Font, Brushes::Black, x + 5, y + 5);
+			g->DrawString("He найден", this->Font, Brushes::Black, x + 5, y + 20);
+		}
+
+		//градиент
+		x = x0;
+		y = y + 50;
+
+		System::Drawing::Drawing2D::LinearGradientBrush^ linGrBrush = 
+			gcnew System::Drawing::Drawing2D::LinearGradientBrush(
+			Rectangle(10, 10, 100, 100),
+			Color::BlueViolet,   // Opaque red
+			Color::FromArgb(255, 0, 0, 255),   // Opaque blue
+			0);  //angle
+
+		g->FillRectangle(linGrBrush, x * 3 + 2, y , w, w);
+		g->FillRectangle(linGrBrush, x * 3 + 2, y + w + 10, 200, 30);
 	}
 	private: System::Void pictureBox1_ClientSizeChanged(System::Object^ sender, System::EventArgs^ e) {
 		this->Refresh();
